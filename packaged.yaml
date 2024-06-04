@@ -1,0 +1,28 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  EmailHandlerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: EmailServiceFunction
+      CodeUri: s3://lambda-functions/be6a12f3361a5e6b433293b955ccb3a4
+      Handler: com.example.email.EmailFunctionHandler
+      Runtime: java17
+      Architectures:
+      - x86_64
+      MemorySize: 2048
+      Timeout: 30
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue:
+              Fn::GetAtt:
+              - EmailQueue
+              - Arn
+    Metadata:
+      SamResourceId: EmailHandlerFunction
+  EmailQueue:
+    Type: AWS::SQS::Queue
+    Metadata:
+      SamResourceId: EmailQueue

@@ -1,0 +1,30 @@
+server.port: 5001
+spring:
+  application:
+    name: email-service
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+
+  properties:
+    mail:
+      smtp:
+        auth: false
+        starttls:
+          enable: false
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+cloud:
+  aws:
+    region:
+      static: us-east-1
+      auto: false
+    credentials:
+      access-key: test
+      secret-key: test
+    end-point:
+      uri: https://localhost.localstack.cloud:4566/000000000000/email

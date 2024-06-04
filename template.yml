@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  EmailHandlerFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      CodeUri: .
+      Handler: com.example.email.EmailFunctionHandler
+      Runtime: java17
+      Architectures:
+        - x86_64
+      MemorySize: 2048
+      Timeout: 30
+      Events:
+        SQSEvent:
+          Type: SQS
+          Properties:
+            Queue: !GetAtt EmailQueue.Arn
+
+  EmailQueue:
+    Type: AWS::SQS::Queue
